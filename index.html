@@ -41,41 +41,15 @@
     min-height:100vh;
   }
   .app-shell{max-width:480px;margin:0 auto;min-height:100vh;padding:0 18px 40px;}
-  .app-header{display:flex;align-items:center;justify-content:space-between;padding:24px 0 18px;}
+  .app-header{display:flex;align-items:center;justify-content:center;padding:24px 0 18px;}
   .brand{font-family:var(--font-display);font-size:23px;letter-spacing:.03em;}
-  .icon-btn{width:38px;height:38px;border-radius:50%;border:1px solid var(--border);background:var(--surface);font-size:16px;cursor:pointer;color:var(--ink-soft);line-height:1;}
-  .icon-btn:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px;}
-  .screen[hidden]{display:none;}
+  
   .muted{color:var(--ink-soft);font-size:14px;line-height:1.55;}
   h1{font-family:var(--font-display);font-weight:400;font-size:27px;letter-spacing:.02em;margin:0 0 8px;}
 
-  /* upload screen */
-  .upload-card{text-align:center;padding:38px 14px 10px;}
-  .upload-icon{width:56px;height:56px;border-radius:50%;background:var(--cobalt-bg);color:var(--cobalt);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
-  .upload-card h1{margin-bottom:10px;}
-  .upload-card .muted{max-width:320px;margin:0 auto 24px;}
-  .privacy-note{display:flex;gap:8px;align-items:flex-start;background:var(--green-bg);color:#33543B;border-radius:10px;padding:12px 14px;font-size:12.5px;line-height:1.5;text-align:left;margin-top:22px;}
-  .privacy-note svg{flex-shrink:0;margin-top:1px;}
-
   .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;border-radius:10px;font-family:var(--font-body);font-weight:600;font-size:15px;border:none;cursor:pointer;text-decoration:none;}
   .btn:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px;}
-  .btn-primary{background:var(--cobalt);color:#fff;}
-  .btn-primary:active{background:var(--cobalt-dark);}
-  .btn-primary:disabled{background:#B9C4CC;cursor:not-allowed;}
   .btn-secondary{background:var(--surface);color:var(--ink);border:1px solid var(--border);}
-  .btn-block{width:100%;}
-  .file-btn{width:100%;max-width:280px;}
-  .error-text{color:var(--rust);font-size:13px;margin-top:14px;}
-  .link-btn{background:none;border:none;color:var(--cobalt);font-family:var(--font-body);font-size:13px;font-weight:600;cursor:pointer;padding:8px;}
-
-  /* row picker screen */
-  .row-picker{display:flex;flex-direction:column;gap:6px;margin:16px 0 20px;max-height:48vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
-  .row-pick-item{display:flex;align-items:flex-start;gap:10px;text-align:left;padding:11px 12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-family:var(--font-mono);font-size:12px;color:var(--ink-soft);cursor:pointer;width:100%;}
-  .row-pick-item:focus-visible{outline:2px solid var(--cobalt);outline-offset:2px;}
-  .row-pick-item .row-num{font-family:var(--font-body);font-weight:700;color:var(--ink);min-width:20px;}
-  .row-pick-item.selected{border-color:var(--cobalt);background:var(--cobalt-bg);color:var(--ink);}
-  .row-pick-item .row-cells{word-break:break-word;}
-  .pick-row-actions{position:sticky;bottom:0;background:linear-gradient(to top, var(--bg) 60%, transparent);padding-top:14px;}
 
   /* toggle */
   .toggle-row{margin-bottom:24px;}
@@ -136,44 +110,9 @@
 
   <header class="app-header">
     <span class="brand">VYHLEDÁVAČ ZAŘÍZENÍ</span>
-    <button id="changeFileBtn" class="icon-btn" hidden title="Nahrát jiný soubor" aria-label="Nahrát jiný soubor">⟳</button>
   </header>
 
-  <!-- SCREEN 1: upload -->
-  <main id="screenUpload" class="screen">
-    <div class="upload-card">
-      <div class="upload-icon">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 8l5-5 5 5"/><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
-      </div>
-      <h1>Nahraj seznam zařízení</h1>
-      <p class="muted">Vyber Excel (.xlsx) nebo CSV soubor se seznamem zařízení.</p>
-      <label class="btn btn-primary file-btn">
-        Vybrat soubor
-        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,text/csv,text/plain" hidden>
-      </label>
-      <p id="uploadError" class="error-text" hidden></p>
-      <div class="privacy-note">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
-        <span>Soubor se zpracuje přímo v telefonu. Data se nikam neodesílají.</span>
-      </div>
-    </div>
-  </main>
-
-  <!-- SCREEN 2: pick starting row -->
-  <main id="screenPickRow" class="screen" hidden>
-    <h1>Kde začínají data?</h1>
-    <p class="muted">Klepni na první řádek se skutečným záznamem (ne na hlavičku). Sloupce zleva: A, B, C, D.</p>
-    <div class="row-picker" id="rowPickerList"></div>
-    <div class="pick-row-actions">
-      <button id="confirmRowBtn" class="btn btn-primary btn-block">Potvrdit a pokračovat</button>
-      <div style="text-align:center;">
-        <button id="cancelPickBtn" class="link-btn">Zrušit a nahrát jiný soubor</button>
-      </div>
-    </div>
-  </main>
-
-  <!-- SCREEN 3: search -->
-  <main id="screenSearch" class="screen" hidden>
+  <main id="screenSearch">
     <div class="toggle-row">
       <span class="toggle-label">HLEDAT PODLE</span>
       <div class="segmented" id="columnToggle">
@@ -208,11 +147,519 @@
 (function(){
   "use strict";
 
+  // =========================================================
+  // ZDE VLOŽ SVÁ EXCEL/CSV DATA V TEXTOVÉ PODOBĚ
+  // Můžeš prostě otevřít Excel, dát "Uložit jako CSV" a obsah 
+  // zkopírovat mezi zpětné uvozovky (` `).
+  // =========================================================
+  const rawCSV = `Item No. old;New No.;Equipment name;LINE, SYSTEM;Main material;Characteristic data 1 (nominal volume) l
+;;;;;
+;;;;;
+;;;;;
+B1.03;B1.01;BALANCES FOR CHARGING OF LIQUIDS;XL line;SS 316L;250 kg, precision 1g
+-;B1.xx;BALANCES FOR CHARGING OF LIQUIDS;XL line;SS 316L;250 kg, precision 1g
+-;B1.xx;BALANCES FOR FINAL PACKING;XL line;SS 316L;min.60 kg, precision 1g
+B1.05;B1.02;BALANCES FOR FINAL PACKING;XL line;SS 316L;min.60 kg, precision 1g
+B1.08;B1.03;PALETTE WEIGHING TROLLEY;XL line;SS 304;2000 kg
+-;B1.04;PALETTE WEIGHING TROLLEY;Utility;SS 304;2000 kg
+B1.02;B1.11;BALANCES FOR CHARGING OF LIQUIDS;L line;SS 316L;250 kg, precision 1g
+;B1.xx;BALANCES FOR FINAL PACKING;L line;SS 316 L;min.60 kg, precision 1g
+;B1.xx;BALANCES FOR FINAL PACKING;L line;SS 316 L;min.60 kg, precision 1g
+-;B1.12;PALETTE WEIGHING TROLLEY;L line;SS 304;2000 kg
+B1.06;B1.21;BALANCES FOR CHARGING OF LIQUIDS;M line;SS 316L;250 kg, precision 1g
+;B1.xx;BALANCES FOR FINAL PACKING;M line;SS 316 L;min.60 kg, precision 1g
+;B1.xx;BALANCES FOR FINAL PACKING;M line;SS 316 L;min.60 kg, precision 1g
+-;B1.22;PALETTE WEIGHING TROLLEY;M line;SS 316L;2000 kg
+-;B1.31;BALANCES FOR CHARGING OF LIQUIDS;S line;SS 316L;250 kg, precision 1g
+;B1.xx;BALANCES FOR FINAL PACKING;S line;SS 316 L;min.60 kg, precision 1g
+;B1.xx;BALANCES FOR FINAL PACKING;S line;SS 316 L;min.60 kg, precision 1g
+-;B1.32;PALETTE WEIGHING TROLLEY;S line;SS 316L;2000 kg
+B1.07;B1.41;BALANCES FOR FINAL PACKING;Micronizer;SS 316L;min.60 kg, precision 1g
+-;B1.xx;BALANCES FOR LOD (LOSS ON DRYING);XL line;SS 304;
+C1.01;C1.01;Scrubber;XL line EXHAUST AIR S.;PVDF;-
+-;C1.02;Scrubber OEB E;XL line EXHAUST AIR S.;PVDF;-
+-;B1.xx;BALANCES FOR LOD (LOSS ON DRYING);L line;SS 304;
+-;C1.11;Scrubber;L line EXHAUST AIR S.;PVDF;-
+-;C1.12;Scrubber OEB E;L line EXHAUST AIR S.;PVDF;-
+-;B1.xx;BALANCES FOR LOD (LOSS ON DRYING);M line;SS 304;
+-;C1.21 ;Scrubber;M line EXHAUST AIR S.;PVDF;-
+C1.03;C1.22 ;Scruber OEB E;M line EXHAUST AIR S.;PVDF;-
+-;B1.xx;BALANCES FOR LOD (LOSS ON DRYING);S line;SS 304;
+-;C1.31;Scrubber;S line EXHAUST AIR S.;PVDF;-
+-;C1.32;Scrubber OEB E;S line EXHAUST AIR S.;PVDF;-
+-;EP1.01;R1.01 CONDENSER;XL line;GRAPHITE;-
+-;EP1.02;R1.01 VENT COOLER;XL line;GRAPHITE;-
+-;EP1.03;R1.02 CONDENSER;XL line;GRAPHITE;-
+-;EP1.04;R1.02 VENT COOLER;XL line;GRAPHITE;-
+E1.01;EP1.05;R1.03 CONDENSER;XL line;GRAPHITE;-
+E1.02;EP1.06;R1.03 VENT COOLER;XL line;GRAPHITE;-
+E1.06;EP1.07;R1.04 CONDENSER;XL line;GRAPHITE;-
+E1.07;EP1.08;R1.04 VENT COOLER;XL line;GRAPHITE;-
+E1.14;EP1.09;FD1.01 CONDENSER;XL line;GRAPHITE;-
+-;EP1.10;R1.11 CONDENSER;L line;GRAPHITE;-
+-;EP1.11;R1.11 VENT COOLER;L line;GRAPHITE;-
+-;EP1.12;R1.12 CONDENSER;L line;GRAPHITE;-
+-;EP1.13;R1.12 VENT COOLER;L line;GRAPHITE;-
+-;EP1.14;R1.13 CONDENSER;L line;GRAPHITE;-
+-;EP1.15;R1.13 VENT COOLER;L line;GRAPHITE;-
+-;EP1.16;R1.14 CONDENSER;L line;GRAPHITE;-
+-;EP1.17;R1.14 VENT COOLER;L line;GRAPHITE;-
+-;EP1.18;FD1.11 CONDENSER;L line;GRAPHITE;-
+E1.16;EP1.19;R1.21 CONDENSER;M line;GRAPHITE;-
+E1.17;EP1.20;R1.21 VENT COOLER;M line;GRAPHITE;-
+-;EP1.21;R1.22 CONDENSER;M line;GRAPHITE;-
+-;EP1.22;R1.22 VENT COOLER;M line;GRAPHITE;-
+E1.21;EP1.23;R1.23 CONDENSER;M line;GRAPHITE;-
+E1.22;EP1.24;R1.23 VENT COOLER;M line;GRAPHITE;-
+-;EP1.25;R1.24 CONDENSER;M line;GRAPHITE;-
+-;EP1.26;R1.24 VENT COOLER;M line;GRAPHITE;-
+E1.29;EP1.27;FD1.21 CONDENSER;M line;GRAPHITE;-
+-;EP1.28;R1.31 CONDENSER;S line;GRAPHITE;-
+-;EP1.29;R1.31 VENT COOLER;S line;GRAPHITE;-
+-;EP1.30;R1.32 CONDENSER;S line;GRAPHITE;-
+-;EP1.31;R1.32 VENT COOLER;S line;GRAPHITE;-
+-;EP1.32;R1.33 CONDENSER;S line;GRAPHITE;-
+-;EP1.33;R1.33 VENT COOLER;S line;GRAPHITE;-
+-;EP1.34;R1.34 CONDENSER;S line;GRAPHITE;-
+-;EP1.35;R1.34 VENT COOLER;S line;GRAPHITE;-
+-;EP1.36;FD1.31 CONDENSER;S line;GRAPHITE;-
+E1.04;EU1.01;R1.01 CASCADE HEATER;XL line-cascade;SS 304;-
+E1.03;EU1.02;R1.01 CASCADE COOLER CW;XL line-cascade;SS 304;-
+E1.05;EU1.03;R1.01 CASCADE COOLER BRINE;XL line-cascade;SS 304;-
+E1.12;EU1.04;R1.02 CASCADE HEATER;XL line-cascade;SS 304;-
+E1.11;EU1.05;R1.02 CASCADE COOLER CW;XL line-cascade;SS 304;-
+E1.13;EU1.06;R1.02 CASCADE COOLER BRINE;XL line-cascade;SS 304;-
+-;EU1.07;R1.03 CASCADE HEATER;XL line-cascade;SS 304;-
+-;EU1.08;R1.03 CASCADE COOLER CW;XL line-cascade;SS 304;-
+-;EU1.09;R1.03 CASCADE COOLER BRINE;XL line-cascade;SS 304;-
+E1.09;EU1.10;R1.04 CASCADE HEATER;XL line-cascade;SS 304;-
+E1.08;EU1.11;R1.04 CASCADE COOLER CW;XL line-cascade;SS 304;-
+E1.10;EU1.12;R1.04 CASCADE COOLER BRINE;XL line-cascade;SS 304;-
+E1.15;EU1.13;FD1.01 CASCADE HEATER;XL line-cascade;SS 304;-
+E1.38;EU1.14;FD1.01 CASCADE COOLER;XL line-cascade;SS 304;-
+-;EU1.15;FD1.01 CASCADE COOLER BRINE;XL line-cascade;SS 304;-
+-;EU1.16;R1.11 CASCADE HEATER;L line-cascade;SS 304;-
+-;EU1.17;R1.11 CASCADE COOLER CW;L line-cascade;SS 304;-
+-;EU1.18;R1.11 CASCADE COOLER BRINE;L line-cascade;SS 304;-
+-;EU1.19;R1.12 CASCADE HEATER;L line-cascade;SS 304;-
+-;EU1.20;R1.12 CASCADE COOLER CW;L line-cascade;SS 304;-
+-;EU1.21;R1.12 CASCADE COOLER BRINE;L line-cascade;SS 304;-
+-;EU1.22;R1.13 CASCADE HEATER;L line-cascade;SS 304;-
+-;EU1.23;R1.13 CASCADE COOLER CW;L line-cascade;SS 304;-
+-;EU1.24;R1.13 CASCADE COOLER BRINE;L line-cascade;SS 304;-
+-;EU1.25;R1.14 CASCADE HEATER;L line-cascade;SS 304;-
+-;EU1.26;R1.14 CASCADE COOLER CW;L line-cascade;SS 304;-
+-;EU1.27;R1.14 CASCADE COOLER BRINE;L line-cascade;SS 304;-
+-;EU1.28;FD1.11 CASCADE HEATER;L line-cascade;SS 304;-
+-;EU1.29;FD1.11 CASCADE COOLER;L line-cascade;SS 304;-
+-;EU1.30; FD1.11 CASCADE COOLER BRINE;L line-cascade;SS 304;-
+E1.19;EU1.31;R1.21 CASCADE HEATER;M line-cascade;SS 304;-
+E1.18;EU1.32;R1.21 CASCADE COOLER CW;M line-cascade;SS 304;-
+E1.20;EU1.33;R1.21 CASCADE COOLER BRINE;M line-cascade;SS 304;-
+-;EU1.34;R1.22 CASCADE HEATER;M line-cascade;SS 304;-
+-;EU1.35;R1.22 CASCADE COOLER CW;M line-cascade;SS 304;-
+-;EU1.36;R1.22 CASCADE COOLER BRINE;M line-cascade;SS 304;-
+E1.24;EU1.37;R1.23 CASCADE HEATER;M line-cascade;SS 304;-
+E1.23;EU1.38;R1.23 CASCADE COOLER CW;M line-cascade;SS 304;-
+E1.25;EU1.39;R1.23 CASCADE COOLER BRINE;M line-cascade;SS 304;-
+E1.27;EU1.40;R1.24 CASCADE HEATER;M line-cascade;SS 304;-
+E1.26;EU1.41;R1.24 CASCADE COOLER CW;M line-cascade;SS 304;-
+E1.28;EU1.42;R1.24 CASCADE COOLER BRINE;M line-cascade;SS 304;-
+E1.30;EU1.43;FD1.21 CASCADE HEATER;M line-cascade;SS 304;-
+E1.39;EU1.44;FD1.21 CASCADE COOLER;M line-cascade;SS 304;-
+E1.55;EU1.45; FD1.21 CASCADE COOLER BRINE;M line-cascade;SS 304;-
+-;EU1.46;R1.31 CASCADE HEATER;S line-cascade;SS 304;-
+-;EU1.47;R1.31 CASCADE COOLER CW;S line-cascade;SS 304;-
+-;EU1.48;R1.31 CASCADE COOLER BRINE;S line-cascade;SS 304;-
+-;EU1.49;R1.32 CASCADE HEATER;S line-cascade;SS 304;-
+-;EU1.50;R1.32 CASCADE COOLER CW;S line-cascade;SS 304;-
+-;EU1.51;R1.32 CASCADE COOLER BRINE;S line-cascade;SS 304;-
+-;EU1.52;R1.33 CASCADE HEATER;S line-cascade;SS 304;-
+-;EU1.53;R1.33 CASCADE COOLER CW;S line-cascade;SS 304;-
+-;EU1.54;R1.33 CASCADE COOLER BRINE;S line-cascade;SS 304;-
+-;EU1.55;R1.34 CASCADE HEATER;S line-cascade;SS 304;-
+-;EU1.56;R1.34 CASCADE COOLER CW;S line-cascade;SS 304;-
+-;EU1.57;R1.34 CASCADE COOLER BRINE;S line-cascade;SS 304;-
+-;EU1.58;FD1.31 CASCADE HEATER;S line-cascade;SS 304;-
+-;EU1.59;FD1.31 CASCADE COOLER;S line-cascade;SS 304;-
+-;EU1.60; FD1.31 CASCADE COOLER BRINE;S line-cascade;SS 304;-
+E1.41;EU1.61;Heat Exchanger (cooling)  purified water;PURIF. WATER;SS 304;-
+E1.36;EU1.62;Heat Exchanger (heating) purified water;PURIF. WATER;SS 316L;-
+E1.42;EU1.63;Plate Heat Exchanger (Cooling by CHW);XL line EXHAUST AIR S.;SS 304;-
+-;EU1.64;COOLER of abs. solution;XL line EXHAUST AIR S.;SS 304;-
+-;EU1.65;Plate Heat Exchanger (Cooling by CHW);L line EXHAUST AIR S.;SS 304;
+-;EU1.66;COOLER of abs. solution;L line EXHAUST AIR S.;SS 304;
+-;EU1.67;Plate Heat Exchanger (Cooling by CHW);M line EXHAUST AIR S.;SS 304;
+-;EU1.68;COOLER of abs. solution;M line EXHAUST AIR S.;SS 304;
+-;EU1.69;Plate Heat Exchanger (Cooling by CHW);S line EXHAUST AIR S.;SS 304;-
+-;EU1.70;COOLER of abs. solution;S line EXHAUST AIR S.;SS 304;-
+E1.34;EU1.71;VENT COOLER  1 (CHILLED WATER);All lines EXHAUST AIR S.;GRAPHITE;-
+E1.52;EU1.72;VENT COOLER 2 (CHILLED WATER);All lines EXHAUST AIR S.;GRAPHITE;-
+E1.31;EU1.73;VENT COOLER 3 ( BRINE);All lines EXHAUST AIR S.;GRAPHITE;-
+E1.32;EU1.74;VENT COOLER4 ( BRINE);All lines EXHAUST AIR S.;GRAPHITE;-
+E1.37;EU1.75;CONDENSER (for heating water system);Utility;SS;-
+E1.45;EU1.76;Heat Exchanger ;Utility;SS;-
+E1.51 ;EU1.77;Heat Exchanger compress room;Utility;SS;-
+-;F1.01;"Mobile disc filter 24"" for charcoal OEB E";XL line;SS 316L;-
+-;F1.02;"Polishing filter for charcoal filter 5"" OEB E";XL line;SS 316L;-
+F1.03;F1.03;Charge filter (capsule) for liquids;XL line;PP/PVDF;-
+-;F1.11;"Mobile disc filter 16"" for charcoal OEB E";L line;SS 316L, PTFE, C22;
+-;F1.12;"Polishing filter for charcoal filter 5""OEB E";L line;SS 316L, PTFE, C22;
+F1.07;F1.13;Charge filter for mixing tank  (capsule) Kapalinový ČR;L line;PP/PVDF;-
+-;F1.21;"Mobile disc filter 12"" for charcoal OEB E";M line;SS 316L;-
+-;F1.22;"Polishing filter for charcoal filter 12""OEB E";M line;SS 316L;-
+F1.06;F1.23;Charge filter for mixing tank  (capsule) for liquids;M line;PP/PVDF;-
+-;F1.31;"Mobile disc filter 6"" for charcoal OEB E";S line;SS 316L;
+-;F1.32;"Polishing filter for charcoal filter 5""OEB E";S line;SS 316L;
+F1.10;F1.33;Charge filter for mixing tank  (capsule) Kapalinový;S line;PP/PVDF;-
+F1.21;F1.41;DUST FILTER Small batch filter;Micronizer;SS 316L;-
+F1.22;F1.42;DUST FILTER;Micronizer;SS 316L;-
+F1.23;F1.43;HEPA FILTER;Micronizer;SS 316L;-
+F1.12;F1.50;Vent filter microbial;PURIF. WATER;SS-316L/PP/PVDF;-
+F1.20;F1.51;Cartrige filter for nitrogen;Utility;SS 316L;-
+F1.13;F1.54;Cartrige filter for nitrogen;Utility;PP/PTFE PVDF;-
+F1.14;F1.55;Cartrige filter for nitrogen;Utility;PP/PTFE PVDF;-
+F1.15;F1.56;Cartrige filter for nitrogen;Utility;PP/PTFE;-
+F1.16;F1.57;Cartrige filter for nitrogen;Utility;PP/PTFE;-
+F1.19;F1.58;Cartrige filter for nitrogen;Utility;PP/PTFE;-
+-;F1.59;Cartrige filter for nitrogen;Utility;SS;-
+F1.24;F1.60;Cartrige filter for nitrogen;Utility;PP/PTFE;-
+F1.17;F1.61;Cartrige filter for nitrogen;Utility;PP/PTFE;-
+F1.18;F1.62;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.63;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.64;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.65;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.66;Cartrige filter for nitrogen;Utility;SS 316L;-
+F1.26;F1.67;Cartrige filter for nitrogen;Utility;PP/PTFE;-
+-;F1.68;Cartrige filter for nitrogen;Utility;SS 316L;-
+F1.28;F1.69;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.70;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.71;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.72;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.73;Cartrige filter for nitrogen;Utility;PP/PTFE;-
+-;F1.74;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.75;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.76;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.77;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.78;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.79;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.80;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.81;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.82;Cartrige filter for nitrogen;Utility;SS 316L;-
+-;F1.83;Filter with active carbon;All lines EXHAUST AIR S.;SS 304;-
+-;F1.84;CO2 adsorbed;PURIF. WATER;-;-
+-;FD1.01;Filter dryer bottomless 3000L;XL line;Hastelloy;3000
+-;FD1.01A;AGITATOR;XL line;Hastelloy;-
+-;FD1.01B;bottom with C22 sieve for FD (5um);XL line;Hastelloy;-
+-;FD1.01C;bottom with C22 sieve for FD (20um);XL line;Hastelloy;-
+-;FD1.11;Filter dryer bottomless 1000L;L line;Hastelloy;1000
+-;FD1.11A;AGITATOR;L line;Hastelloy;-
+-;FD1.11B;bottom with C22 sieve for FD (5um);L line;Hastelloy;-
+-;FD1.11C;bottom with C22 sieve for FD (20um);L line;Hastelloy;-
+FD1.01;FD1.21;Filter dryer bottomless 500L;M line;Hastelloy;500
+-;FD1.21A;AGITATOR;M line;Hastelloy;-
+-;FD1.21B;bottom with C22 sieve for FD (5um);M line;Hastelloy;-
+-;FD1.21C;bottom with C22 sieve for FD (20um);M line;Hastelloy;-
+-;FD1.31;Filter dryer bottomless 100L;S line;Hastelloy;100
+-;FD1.31A;AGITATOR;S line;Hastelloy;-
+-;FD1.31B;bottom with C22 sieve for FD (5um);S line;Hastelloy;-
+-;FD1.31C;bottom with C22 sieve for FD (20um);S line;Hastelloy;-
+K1.01;K1.01;COMPRESSOR air;Utility;-;-
+M1.01;M1.01;MILL + MILL INSTALATION XL;XL line;SS 316L;-
+-;M1.11;MILL + MILL INSTALATION L;L line;SS 316L;-
+-;M1.21;MILL + MILL INSTALATION M;M line;SS 316L;-
+-;M1.31;MILL + MILL INSTALATION S;S line;SS 316L;-
+-;M1.32;Mobile micronizer;S line;SS 316L;-
+M1.03;M1.41;MICRONIZER;Micronizer;SS 316L;-
+L1.02;M1.41A;Fan for MIC-part of MIC;Micronizer;SS 316 L;-
+P1.01;P1.01;R1.01 CASCADE PUMP;XL line-cascade;SS 304;-
+P1.03;P1.02;R1.02 CASCADE PUMP;XL line-cascade;SS 304;-
+-;P1.03;R1.03 CASCADE PUMP;XL line-cascade;SS 304;-
+P1.02;P1.04;R1.04 CASCADE PUMP;XL line-cascade;SS 304;-
+P1.05;P1.05;FD1.01 CASCADE PUMP;XL line-cascade;SS 304;-
+-;P1.06;R1.11 CASCADE PUMP;L line-cascade;SS 304;-
+-;P1.07;R1.12 CASCADE PUMP;L line-cascade;SS 304;-
+-;P1.08;R1.13 CASCADE PUMP;L line-cascade;SS 304;-
+-;P1.09;R1.14 CASCADE PUMP;L line-cascade;SS 304;-
+-;P1.10;FD1.11 CASCADE PUMP;L line-cascade;SS 304;-
+M2-06;M1.xx;Mill FOR WET MILLING;M line;SS 316L;-
+P1.09;P1.11;R1.21 CASCADE PUMP;M line-cascade;SS 304;-
+-;P1.12;R1.22 CASCADE PUMP;M line-cascade;SS 304;-
+P1.10;P1.13;R1.23 CASCADE PUMP;M line-cascade;SS 304;-
+P1.11;P1.14;R1.24 CASCADE PUMP;M line-cascade;SS 304;-
+P1.13;P1.15;FD1.21 CASCADE PUMP;M line-cascade;SS 304;-
+-;P1.16;R1.31 CASCADE PUMP;S line-cascade;SS 304;-
+-;P1.17;R1.32 CASCADE PUMP;S line-cascade;SS 304;-
+-;P1.18;R1.33 CASCADE PUMP;S line-cascade;SS 304;-
+-;P1.19;R1.34 CASCADE PUMP;S line-cascade;SS 304;-
+-;P1.20;FD1.31 CASCADE PUMP;S line-cascade;SS 304;-
+P1.37;P1.21;Circulation Pump;XL line EXHAUST AIR S.;PVDF;-
+-;P1.22;Membrane pump for OEB column;XL line EXHAUST AIR S.;PVDF;-
+-;P1.23;Circulation Pump;L line EXHAUST AIR S.;PVDF;-
+-;P1.24;Pump for OEB column;L line EXHAUST AIR S.;PVDF;-
+-;P1.25;Circulation Pump;M line EXHAUST AIR S.;SS 304;-
+-;P1.26;Pump for OEB column;M line EXHAUST AIR S.;PVDF;-
+-;P1.27;Circulation Pump;S line EXHAUST AIR S.;PVDF;-
+-;P1.28;Membrane pump for OEB column;S line EXHAUST AIR S.;PVDF;-
+P1.24;P1.29;PW pump;PURIF. WATER;SS 316L;-
+P1.06;P1.30;Pump for CIP and solution moving (mobile);XL line;PTFE/EPDM;-
+P1.07;P1.31;Pump for CIP and solution moving (mobile);XL line;PTFE/EPDM;-
+P1.08;P1.32;Pump for CIP and solution moving (mobile);XL line;PTFE/EPDM;-
+P1.42;P1.33;Pump for CIP and solution moving (mobile);L line;PTFE/EPDM;-
+-;P1.34;Pump for CIP and solution moving (mobile);L line;PTFE/EPDM;-
+-;P1.35;Pump for CIP and solution moving (mobile);L line;PTFE/EPDM;-
+P1.14;P1.36;Pump for CIP and solution moving (mobile);M line;PTFE/EPDM;-
+P1.16;P1.37;Pump for CIP and solution moving (mobile);M line;PTFE/EPDM;-
+P1.39;P1.38;Pump for CIP and solution moving (mobile);M line;PTFE/EPDM;-
+-;P1.39;Pump for CIP and solution moving (mobile);S line;PTFE/EPDM;-
+-;P1.40;Pump for CIP and solution moving (mobile);S line;PTFE/EPDM;-
+-;P1.41;Pump for CIP and solution moving (mobile);S line;PTFE/EPDM;-
+P1.19;P1.42;Pump for CIP and solution moving (mobile);Micronizer;PTFE/EPDM;-
+P1.12;P1.43;CHW CIRCULATION PUMP #1;Utility;SS / CS;-
+P1.21;P1.44;CHW CIRCULATION PUMP #2;Utility;SS / CS;-
+P1.22;P1.45;TRANSFER PUMP for Waste (to container);Utility;SS/PTFE;-
+P1.26;P1.46;CHW TRANSFER PUMPS;Utility;SS / CS;-
+P1.27;P1.47;CONDENSATE PUMP #1;Utility;SS / CS;-
+P1.31;P1.48;CONDENSATE PUMP #2;Utility;SS / CS;-
+P1.18;P1.49;EVAPORATOR CIRCULATION PUMP;Utility;SS / CS;-
+P1.25;P1.50;CW TRANSFER PUMPS (UNIT 1);Utility;SS / CS;-
+P1.28;P1.51;BRINE TRANSFER PUMPS #1;Utility;SS / CS;-
+P1.29 (nenalezeno);P1.52;CONDENSER CIRCULATION PUMP;Utility;SS / CS;-
+P1.30;P1.53;BRINE TRANSFER PUMPS #2;Utility;SS / CS;-
+P1.32;P1.54;CW TRANSFER PUMPS (UNIT 1);Utility;SS / CS;-
+P1.33;P1.55;CW TRANSFER PUMPS (UNIT 1);Utility;SS / CS;-
+P1.34;P1.56;CW TRANSFER PUMPS (UNIT 1);Utility;SS / CS;-
+P1.35 (nenalezeno);P1.57;CW TRANSFER PUMPS (UNIT 2);Utility;SS / CS;-
+P1.36 (nenalezeno);P1.58;CW TRANSFER PUMPS (UNIT 2);Utility;SS / CS;-
+P1.40;P1.59;Pump for CIP and solution moving (mobile);XL line;PTFE/EPDM;-
+-;P1.62;Pump for CIP and solution moving (mobile);L line;PTFE/EPDM;-
+P1.41;P1.65;Pump for CIP and solution moving (mobile);M Line;PTFE/EPDM;-
+-;P1.68;Pump for CIP and solution moving (mobile);S Line;PTFE/EPDM;-
+-;P1.72;Dosing pump;XL line;PTFE/EPDM;-
+-;P1.73;Dosing pump;L line;PTFE/EPDM;-
+P1.43;P1.74;Dosing pump;M Line;PTFE/EPDM;-
+-;P1.75;Dosing pump;S Line;PTFE/EPDM;-
+P1.51 ;P1.76;Pump in compressor room;Utility;SS / CS;-
+P1.53 ;P1.77;Pump diaphragm ;Utility;PTFE/EPDM;-
+R1.01;R1.01;REACTOR  1600L - H2;XL line;G.L.;1600
+R1.01A;R1.01A;AGITATOR;XL line;G.L.;-
+R1.03;R1.02;REACTOR 2500L - H2;XL line;G.L.;2500
+R1.03A;R1.02A;AGITATOR;XL line;G.L.;-
+-;R1.03;REACTOR 2500L;XL line;G.L.;2500
+-;R1.03A;AGITATOR;XL line;G.L.;-
+-;R1.04;REACTOR 2500L for ML;XL line;G.L.;2500
+-;R1.04A;AGITATOR;XL line;G.L.;-
+-;R1.11;REACTOR  400L - H2;L line;G.L.;400
+-;R1.11A;AGITATOR;L line;G.L.;-
+R1.11;R1.12;REACTOR 630L - H2;L line;G.L.;630
+R1.11A;R1.12A;AGITATOR;L line;G.L.;-
+-;R1.13;REACTOR 630L;L line;G.L.;630
+-;R1.13A;AGITATOR;L line;G.L.;-
+-;R1.14;REACTOR 630L for ML;L line;G.L.;630
+-;R1.14A;AGITATOR;L line;G.L.;-
+R1.05;R1.21;REACTOR 250L - H2;M line;G.L.;250
+R1.05A;R1.21A;AGITATOR;M line;G.L.;-
+R1.06;R1.22;REACTOR 400L - H2;M line;G.L.;400
+R1.06A;R1.22A;AGITATOR;M line;G.L.;-
+-;R1.23;REACTOR 400L;M line;G.L.;400
+-;R1.23A;AGITATOR;M line;G.L.;-
+-;R1.24;REACTOR 400L for ML;M line;G.L.;400
+-;R1.24A;AGITATOR;M line;G.L.;-
+-;R1.31;REACTOR 30L;S line;GLASS;30
+-;R1.31A;AGITATOR;S line;PTFE;-
+-;R1.32;REACTOR 63L - H2;S line;G.L.;63
+-;R1.32A;AGITATOR;S line;G.L.;-
+-;R1.33;REACTOR 63L;S line;G.L.;63
+-;R1.33A;AGITATOR;S line;G.L.;-
+-;R1.34;REACTOR 150L for ML;S line;G.L.;150
+-;R1.34A;AGITATOR;S line;G.L.;-
+S1.01;S1.01;WATER-OIL SEPARATOR;Utility;-;-
+-;R1.xx;REACTOR 150L for NaOH;XL line;SS 316L;150
+-;TP1.01;DOSING VESSEL for 1600 ltr;XL line;GLASS;200
+-;TP1.02;Vessel for condensate FD;XL line;GLASS;100
+-;TP1.03;Mobile glass vessel 200L;XL line;GLASS;200
+-;R1.xx;REACTOR 150L for NaOH;L line;SS 316L;150
+V1.01;TP1.11;DOSING VESSEL ;L line;GLASS;100
+V1.08;TP1.12;Vessel for condensate FD;L line;GLASS;50
+V1.12 ;TP1.13;Mobile glass vessel 100L;L line;GLASS;100
+-;R1.xx;REACTOR 150L for NaOH;M line;SS 316L;150
+-;R1.xx;REACTOR FOR ATI PRODUCTION;M line;GLASS;10
+-;D1.xx;DRYER FOR ATI PRODUCTION;M line;SS 316L;
+-;TP1.21;DOSING VESSEL for 250 ltr;M line;GLASS;100
+-;TP1.22;Vessel for condensate M line;M line;GLASS;50
+V1.04;TP1.23;Mobile glass vessel;M line;GLASS;100
+-;R1.xx;REACTOR 150L for NaOH;S line;SS 316L;150
+-;TP1.31;DOSING VESSEL ;S line;GLASS;50
+-;TP1.32;Vessel for condensate FD;S line;GLASS;30
+-;TP1.33;Mobile glass vessel 50L;S line;GLASS;50
+V1.52;TU1.01;Solvents Tank #3;Utility;SS;5000
+V1.53;TU1.02;Solvents Tank #4;Utility;SS;5000
+V1.05;TU1.03;Solvents Tank #1;Utility;SS;2500
+V1.10;TU1.04;Solvents Tank #2;Utility;SS;1600
+V1.11 ;TU1.05;Solvents Tank #5;Utility;SS;1 200
+V1.54;TU1.06;Solvents Tank #6 ;Utility;SS;400
+T1.09;TU1.07;Solvents Tank #7 ;Utility;G.L.;5 270
+T1.08;TU1.08;Organic waste tank WO XL line;Utility;G.L.;5 270
+T1.07;TU1.09;Water waste tank WW XL line;Utility;G.L.;5 270
+R1.01;TU1.10;Waste vessel WO L line;Utility;G.L.;2309
+R1.02;TU1.11;Waste vessel WW L line;Utility;G.L.;2309
+-;TU1.12;Waste vessel WO M line;Utility;G.L.;1500
+-;TU1.13;Waste vessel WW M line;Utility;G.L.;1500
+-;TU1.14;Waste vessel WO S line;Utility;G.L.;500
+-;TU1.15;Waste vessel WW S line;Utility;G.L.;500
+T1.05;TU1.16;H/C MEDIUM EXPANSION VESSEL XL line;Utility;SS 304;630
+T1.15;TU1.17;CONDENSATE COLLECTING TANK;Utility;SS;1500
+-;TU1.18;Vessel as buffer and separator (before vac. pump);Utility;G.L.;1000
+-;TU1.19;Vessel as buffer and separator (before vac. pump);Utility;G.L.;1000
+-;TU1.20;Vessel as buffer and separator (before vac. pump);Utility;G.L.;1000
+-;TU1.21;Vessel as buffer and separator (before vac. pump);Utility;G.L.;1000
+T1.03;TU1.22;Vessel as buffer and separator (before vac. pump);Utility;G.L.;487
+T1.10;TU1.23;C.A. BUFFER TANK;Utility;SS;1700
+T1.20;TU1.24;Vessel for NaOH solution XL;XL line EXHAUST AIR S.;PP -B;150
+-;TU1.25;Vessel for NaOH solution L;L line EXHAUST AIR S.;PP -B;150
+-;TU1.26;Vessel for NaOH solution M;M line EXHAUST AIR S.;PP -B;150
+-;TU1.27;Vessel for NaOH solution S;S line EXHAUST AIR S.;PP -B;150
+T1.13;TU1.28;CHILLED WATER TANK ;Utility;SS 304;2500
+T1.25 ;TU1.29;Vessel sprayer (sanitation of premises, cleaning of auxiliary equip.);Utility;SS;-
+T1.26;TU1.30;Vessel sprayer (sanitation of premises, cleaning of auxiliary equip.);Utility;SS;-
+T1.17;TU1.31;NITROGEN EXPANSION VESSEL;Utility;CS;300
+Z1.41;TU1.32;Expansion vessel for HVAC;Utility;SS;-
+T1.12;TU1.33;COOLING WATER PIT;Utility;SS / CS;-
+T1.16;TU1.34;BRINE ACUMULATION TANK;Utility;SS 316L;4000
+T1.19;TU1.35;NITROGEN EXPANSION VESSEL;Utility; CS;-
+T1.24;TU1.36;Vessel CW for HVAC;Utility;-;4000
+T1.21 23;TU1.37;Vent collector;All lines EXHAUST AIR S.;PPcond.;-
+-;TU1.38;Vessel for condensate VACD XL line;Utility;G.L.;100
+-;TU1.39;Vessel for condensate VACD L line;Utility;G.L.;100
+-;TU1.40;Vessel for condensate VACD M line;Utility;G.L.;100
+-;TU1.41;Vessel for condensate VACD S line;Utility;G.L.;100
+-;TU1.42;Vessel for condensate VACM;Utility;G.L.;100
+-;TU1.43;Vessel for vent condensate XL line;Utility;G.L.;200
+-;TU1.44;Vessel for vent condensate L line;Utility;G.L.;200
+-;TU1.45;Vessel for vent condensate M line;Utility;G.L.;200
+-;TU1.46;Vessel for vent condensate S line;Utility;G.L.;200
+T1.04;TU1.47;PW Storage tank, 4000 l;PURIF. WATER;SS 316L;4000
+T1.11;TU1.48;BLOWDOWN TANK;Utility;SS;3000
+Z1.40 ;TU1.49;Expansion vessel for hot water ;Utility;SS;-
+L1.01;V1.01;Fan (for keeping of underpresure between process-vent and vac-vent piping);All lines EXHAUST AIR S.;SS/PVDF/PTFE;-
+-;V1.02;Fan (for keeping of underpresure between process-vent and vac-vent piping);All lines EXHAUST AIR S.;SS/PVDF/PTFE;-
+J1.01;VP1.01;DRY VACUUM PUMP for distilation XL;Utility;SS;-
+-;VP1.02;DRY VACUUM PUMP  for manipulation;Utility;SS;-
+-;VP1.11;DRY VACUUM PUMP for distilation L;Utility;SS;
+-;VP1.21;DRY VACUUM PUMP for distilation M;Utility;SS;
+-;VP1.31;DRY VACUUM PUMP for distilation S;Utility;SS;
+-;VZV1.01;Forklift truck NON EX-XL;Utility;-;-
+-;VZV1.02;Forklift truck NON EX -L;Utility;-;-
+-;VZV1.03;Forklift truck NON EX -M;Utility;-;-
+-;VZV1.04;Forklift truck NON EX -M;Utility;-;-
+-;VZV1.05;Lifting equipment Unit1;Utility;-;-
+Z1.24;ZP1.01;VACUUM CONVEYOR PTS 150;XL line;SS 316L;-
+Z1.34;ZP1.02;VACUUM CONVEYOR PTS 150;XL line;SS 316L;-
+-;ZP1.03;VACUUM CONVEYOR PTS 150;XL line;SS 316L;-
+-;ZP1.04;VACUUM CONVEYOR PTS;XL line;SS 316L;-
+Z1.08;ZP1.05;VACUUM CONVEYOR PTS;XL line;SS 316L;-
+Z1.37;ZP1.06;Filling head LBK;XL line;SS 316L;-
+-;ZP1.07;Isolator for mill ;XL line;-;-
+-;ZP1.11;VACUUM CONVEYOR PTS 100;L line;SS 316L;-
+-;ZP1.12;VACUUM CONVEYOR PTS 100;L line;SS 316L;-
+-;ZP1.13;VACUUM CONVEYOR PTS 100;L line;SS 316L;-
+-;ZP1.14;VACUUM CONVEYOR PTS 100;L line;SS 316L;-
+-;ZP1.15;VACUUM CONVEYOR PTS;L line;SS 316L;-
+Z1.09;ZP1.16;Filling head LBK;L line;SS 316L;-
+-;ZP1.17;Isolator for mill ;L line;-;-
+Z1.19;ZP1.21;VACUUM CONVEYOR PTS 100;M line;SS 316L;-
+Z1.35;ZP1.22;VACUUM CONVEYOR PTS 100;M line;SS 316L;-
+-;ZP1.23;VACUUM CONVEYOR PTS;M line;SS 316L;-
+-;ZP1.24;VACUUM CONVEYOR PTS;M line;SS 316L;-
+Z1.22;ZP1.25;VACUUM CONVEYOR PTS;M line;SS 316L;-
+Z1.38 ;ZP1.26;Filling head LBK;M line;SS 316L;-
+-;ZP1.27;Isolator for mill ;M line;-;-
+-;ZP1.32;VACUUM CONVEYOR PTS;S line;SS 316L;-
+-;ZP1.33;VACUUM CONVEYOR PTS;S line;SS 316L;-
+-;ZP1.34;VACUUM CONVEYOR PTS;S line;SS 316L;-
+-;ZP1.35;VACUUM CONVEYOR PTS;S line;SS 316L;-
+-;ZP1.36;Filling head LBK;S line;SS 316L;-
+-;ZP1.37;Isolator for mill ;S line;-;-
+Z1.22;ZP1.41;VACUUM CONVEYOR for M1.41 PTS 100;Micronizer;SS 316L;-
+Z1.21;ZP1.42;Filling head LBK;Micronizer;SS 316L;-
+Z1.20;ZP1.43;CLOSING DRUM SYSTEM for M1.41 DCS;Micronizer;SS 316L;-
+-;ZP1.44;Isolator for weighing OEB A - OEB E;Isolator;-;-
+-;ZP1.45;Filling head LBK for glove box;Isolator;SS 316L;-
+Z1.30;ZU1.01;PW system Unit Pre-treatment+RO+CEDI;PURIF. WATER;SS 316 L;-
+Z1.05;ZU1.02;UV-lamp;PURIF. WATER;SS 316 L;-
+-;ZP1.xx;Equipment for drying and manipulation with IBE product;XL line;SS 316 L, PE, PP;
+Z1.27;ZU1.03;EXHAUST AIR SYSTEM Unit;XL line EXHAUST AIR S.;-;-
+Z1.31;ZU1.04;Cyclone - Particle separator in Hydrogen vent pipe;All lines EXHAUST AIR S.;SS;-
+-;ZU1.05;Cyclone - Particle separator in Hydrogen vent pipe;All lines EXHAUST AIR S.;SS;-
+Z1.07;ZU1.06;CHILLER  chilled water;Utility;SS;-
+Z1.13;ZU1.07;BRINE CHILLER;Utility;SS;-
+Z1.06;ZU1.08;COOLING TOWER #1;Utility;SS 304;-
+Z1.10;ZU1.09;COOLING TOWER #2;Utility;SS 304;-
+Z1.14;ZU1.10;HEATING WATER SYSTEM;Utility;-;-
+Z1.11;ZU1.11;CHARGING UNIT FOR FEED WATER;Utility;-;-
+Z1.12;ZU1.12;WATER PRE-TREATMENT;Utility;-;-
+-;ZU1.13;EXHAUST AIR SYSTEM Unit;L line EXHAUST AIR S.;-;-
+-;ZU1.14;CHILLER 1  chilled water for HVAC;Utility;-;-
+-;ZU1.15;CHILLER 2 chilled water for HVAC;Utility;;
+D1.51 ;ZU1.16;Air dryer ;Utility;-;-
+-;ZU1.23;EXHAUST AIR SYSTEM Unit;M line EXHAUST AIR S.;-;-
+-;ZU1.33;EXHAUST AIR SYSTEM Unit;S line EXHAUST AIR S.;-;-
+B1.01;-;BALANCES IN WEIGHING ROOM;-;SS 316L;-
+B1.04;-;BALANCE FOR ACTIVE CARBON ;-;-;-
+D1.01;-;VACUUM PAN DRYER;-;-;-
+D1.01A;-;D1.01 AGITATOR;-;-;-
+D1.01B;-;LUMP BREAKER;-;-;-
+D1.02;-;VACUUM PAN DRYER;-;-;-
+D1.02A;-;D1.02 AGITATOR;-;-;-
+E1.35;-;R1.11 AFTER COOLER;-;Glass;-
+E1.40;-;R1.13 AFTER COOLER;-;Glass;-
+F1.01;-;"Mobile disc filter 16"" for charcoal OEB D";XL line;SS 316L;-
+F1.05;-;"Polishing filter for charcoal filter 16"" OEB D ";XL line;SS;-
+F1.02;-;"Mobile disc filter 12"" for charcoal OEB D";M line;SS;-
+F1.09;-;"Polishing filter for charcoal filter 12""OEB D";M line;SS;-
+F1.25;-;Cartrige filter for nitrogen;Utility;PP/PTFE;-
+FD1.01C;-;bottom with C22 sieve for FD1.01 (5um);-;Hastelloy;-
+J1.02 ;-;Vývěva NENÍ na U1, mobilní vývěva;-;-;-
+O1.01;-;CENTRIFUGE;-;-;-
+O1.02;-;CENTRIFUGE;-;-;-
+P1.17;-;Dosing pump;-;-;-
+R1.04;-;MIXING TANK  (washing, mixing API for moving to reactors);-;-;-
+R1.04A;-;R1.04 AGITATOR+ mechanical seal with N2;-;-;-
+R1.08;-;MIXING TANK # 3 (washing, mixing API for moving to reactors);-;-;-
+R1.08A;-;R1.08 AGITATOR+ mechanical seal with N2;-;-;-
+R1.09;-;MIXING TANK #1 for active carbon suspension preparation;-;-;-
+R1.09A;-;R1.09 AGITATOR;-;-;-
+R1.10;-;Mobile agitated vessel for alkaline solutions preparation;-;-;-
+R1.10A;-;R1.10 AGITATOR;-;-;-
+R1.02;-;REACTOR 1600L;-;G.L.;1600
+R1.02A;-;R1.04 AGITATOR;-;G.L.;-
+R1.07;-;REACTOR 250L;-;G.L.;250
+R1.14A;-;R1.14 AGITATOR + mechanical seal (modification N2);-;G.L.;-
+T1.02;-;Vessel for 0,9 Mpa;UTILITY;SS 304;630
+T1.06;-;O1.01 NITROGEN RECEIVER (N2 for removing cake);UTILITY;SS 316L;630 500l
+V1.03;-;AZEOTROPIC VESSEL (mobile);-;-;-
+V1.07 použiť?;-;O1.01 VESSEL for ML, distillate and extract collecting for 1600;-;G.L.;1600/1770
+V1.09;-;O1.02 VESSEL for ML, distillate and extract collecting for 250;-;-;-
+XXX;-;EZIdock klapky;-;-;-
+Z1.04;-;PUW-Unit: capacity 100 l/h;PURIF. WATER;-;
+Z1.15;-;Pre-treatment for PUW 200 L/H;PURIF. WATER;SS 316 L;
+Z1.17;-;Filling head LBK;-;SS 316L;-
+Z1.23;-;CLOSING DRUM SYSTÉM DCS;-;-;-
+Z1.28;-;PUW-Unit: capacity 100 l/h;PURIF. WATER;-;
+Z1.29;-;Electric Heating Jacket ;-;-;-
+Z1.32;-;Cyclone - Particle separator in outlet from O1.01;-;-;-
+Z1.33;-;Cyclone - Particle separator in outlet from O1.02;-;-;-
+Z1.36 ;-;VACUUM CONVEYOR PTS vyřazen od D250;-;-;-
+-;;H/C MEDIUM EXPANSION VESSEL L line;Utility;;300
+-;;H/C MEDIUM EXPANSION VESSEL M line;Utility;;180
+-;;H/C MEDIUM EXPANSION VESSEL S line;Utility;;100
+Z1.50;-;Chiller for HVAC;Utility;-;-
+`;
+  // =========================================================
+
   // ---------- state ----------
-  var rawRows = [];
   var dataset = [];
   var searchColumn = 'B';
-  var selectedRowIndex = 0;
   var recognition = null;
 
   // ---------- utils ----------
@@ -245,84 +692,40 @@
     return dp[m][n];
   }
 
-  function showScreen(name){
-    document.getElementById('screenUpload').hidden = name!=='upload';
-    document.getElementById('screenPickRow').hidden = name!=='pickRow';
-    document.getElementById('screenSearch').hidden = name!=='search';
-    document.getElementById('changeFileBtn').hidden = name!=='search';
-  }
+  // ---------- parse hardcoded data ----------
+  function loadHardcodedData(){
+    try {
+      // Využití SheetJS na rozebrání textového CSV (stejně bezpečné na uvozovky/čárky jako při uploadu)
+      var workbook = XLSX.read(rawCSV, {type: 'string'});
+      var sheetName = workbook.SheetNames[0];
+      var sheet = workbook.Sheets[sheetName];
+      var rawRows = XLSX.utils.sheet_to_json(sheet, {header:1, raw:false, defval:''});
+      
+      dataset = [];
+      for(var i=0; i<rawRows.length; i++){
+        var r = rawRows[i];
+        
+        // Přeskočit úplně prázdné řádky
+        if(!r || r.every(function(c){ return c===null||c===undefined||c.toString().trim()===''; })) continue;
+        
+        // Přeskočit hlavičku (detekce podle obvyklých slov v prvním sloupci)
+        var firstCol = (r[0]||'').toString().toLowerCase();
+        if(firstCol.includes('item no') || firstCol.includes('staré') || firstCol.includes('stare')) continue;
 
-  // ---------- file parsing ----------
-  function handleFile(file){
-    var errEl = document.getElementById('uploadError');
-    errEl.hidden = true;
-    var reader = new FileReader();
-    reader.onload = function(e){
-      try{
-        var data = new Uint8Array(e.target.result);
-        var workbook = XLSX.read(data, {type:'array'});
-        var sheetName = workbook.SheetNames[0];
-        var sheet = workbook.Sheets[sheetName];
-        var rows = XLSX.utils.sheet_to_json(sheet, {header:1, raw:false, defval:''});
-        if(!rows || rows.length===0){ throw new Error('empty'); }
-        rawRows = rows;
-        renderRowPicker(rows);
-      }catch(err){
-        errEl.textContent = 'Soubor se nepodařilo načíst. Zkontroluj, že je to platný .xlsx, .xls nebo .csv soubor.';
-        errEl.hidden = false;
+        dataset.push({
+          A: (r[0]!==undefined && r[0]!==null) ? r[0].toString().trim() : '',
+          B: (r[1]!==undefined && r[1]!==null) ? r[1].toString().trim() : '',
+          C: (r[2]!==undefined && r[2]!==null) ? r[2].toString().trim() : '',
+          D: (r[3]!==undefined && r[3]!==null) ? r[3].toString().trim() : '',
+          E: (r[4]!==undefined && r[4]!==null) ? r[4].toString().trim() : '',
+          F: (r[5]!==undefined && r[5]!==null) ? r[5].toString().trim() : ''
+        });
       }
-    };
-    reader.onerror = function(){
-      errEl.textContent = 'Soubor se nepodařilo přečíst.';
-      errEl.hidden = false;
-    };
-    reader.readAsArrayBuffer(file);
-  }
 
-  function renderRowPicker(rows){
-    var list = document.getElementById('rowPickerList');
-    list.innerHTML = '';
-    var previewRows = rows.slice(0, 20);
-
-    var suggestIdx = previewRows.findIndex(function(r){
-      return r && r[2] && r[2].toString().trim() && r[3] && r[3].toString().trim();
-    });
-    if(suggestIdx === -1) suggestIdx = 0;
-    selectedRowIndex = suggestIdx;
-
-    previewRows.forEach(function(r, idx){
-      var item = document.createElement('button');
-      item.type = 'button';
-      item.className = 'row-pick-item' + (idx===selectedRowIndex ? ' selected' : '');
-      var cells = [0,1,2,3].map(function(c){
-        var v = r[c];
-        return (v!==null && v!==undefined && v!=='') ? escapeHtml(v) : '—';
-      });
-      item.innerHTML = '<span class="row-num">'+(idx+1)+'</span><span class="row-cells">'+cells.join(' · ')+'</span>';
-      item.addEventListener('click', function(){
-        selectedRowIndex = idx;
-        list.querySelectorAll('.row-pick-item').forEach(function(el){ el.classList.remove('selected'); });
-        item.classList.add('selected');
-      });
-      list.appendChild(item);
-    });
-
-    showScreen('pickRow');
-  }
-
-  function buildDataset(startIndex){
-    dataset = [];
-    for(var i=startIndex; i<rawRows.length; i++){
-      var r = rawRows[i];
-      if(!r || r.every(function(c){ return c===null||c===undefined||c.toString().trim()===''; })) continue;
-      dataset.push({
-        A: (r[0]!==undefined && r[0]!==null) ? r[0].toString().trim() : '',
-        B: (r[1]!==undefined && r[1]!==null) ? r[1].toString().trim() : '',
-        C: (r[2]!==undefined && r[2]!==null) ? r[2].toString().trim() : '',
-        D: (r[3]!==undefined && r[3]!==null) ? r[3].toString().trim() : '',
-        E: (r[4]!==undefined && r[4]!==null) ? r[4].toString().trim() : '',
-        F: (r[5]!==undefined && r[5]!==null) ? r[5].toString().trim() : ''
-      });
+      document.getElementById('datasetInfo').textContent = 'Načteno '+dataset.length+' záznamů. Sloupce: A staré číslo · B nové číslo · C název · D linka · E materiál · F charakteristika.';
+    } catch(err) {
+      document.getElementById('datasetInfo').textContent = 'Chyba při parsování dat. Zkontroluj CSV text.';
+      document.getElementById('datasetInfo').style.color = 'var(--rust)';
     }
   }
 
@@ -362,7 +765,7 @@
     var html = '<div class="tag-query">Hledáno: "'+escapeHtml(query)+'"</div>';
     html += '<div class="tag-card">';
     html += '<div class="tag-name">'+(escapeHtml(row.C) || '—')+'</div>';
-    if(row.D){ html += '<span class="tag-line">'+escapeHtml(row.D)+'</span>'; }
+    if(row.D && row.D !== '-'){ html += '<span class="tag-line">'+escapeHtml(row.D)+'</span>'; }
     html += '<hr class="tag-divider">';
     html += '<div class="tag-meta">';
     html += '<div><b>Materiál</b><span>'+(escapeHtml(row.E) || '—')+'</span></div>';
@@ -473,36 +876,8 @@
 
   // ---------- wiring ----------
   function init(){
+    loadHardcodedData();
     setupRecognition();
-
-    document.getElementById('fileInput').addEventListener('change', function(e){
-      var file = e.target.files[0];
-      if(file) handleFile(file);
-    });
-
-    document.getElementById('confirmRowBtn').addEventListener('click', function(){
-      buildDataset(selectedRowIndex);
-      if(dataset.length===0){
-        alert('Od tohoto řádku jsem nenašel žádná data. Zkus vybrat jiný řádek.');
-        return;
-      }
-      document.getElementById('datasetInfo').textContent = 'Načteno '+dataset.length+' záznamů. Sloupce: A staré číslo · B nové číslo · C název · D linka · E materiál · F charakteristika.';
-      document.getElementById('resultPanel').innerHTML = '';
-      showScreen('search');
-    });
-
-    document.getElementById('cancelPickBtn').addEventListener('click', function(){
-      document.getElementById('fileInput').value = '';
-      rawRows = [];
-      showScreen('upload');
-    });
-
-    document.getElementById('changeFileBtn').addEventListener('click', function(){
-      rawRows = []; dataset = [];
-      document.getElementById('fileInput').value = '';
-      document.getElementById('resultPanel').innerHTML = '';
-      showScreen('upload');
-    });
 
     document.querySelectorAll('.seg-btn').forEach(function(btn){
       btn.addEventListener('click', function(){
@@ -527,8 +902,6 @@
       var val = input.value.trim();
       if(val){ performSearch(val); }
     });
-
-    showScreen('upload');
   }
 
   init();
